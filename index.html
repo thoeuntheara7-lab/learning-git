@@ -1,4 +1,71 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance System</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f2f2f2; }
+        .button { padding: 10px 15px; margin-top: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        .button:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>Attendance System</h1>
+    <h2>Add Student</h2>
+    <input type="text" id="studentName" placeholder="Enter student name">
+    <button class="button" onclick="addStudent()">Add Student</button>
+    
+    <h2>Mark Attendance</h2>
+    <input type="text" id="markName" placeholder="Enter student name to mark attendance">
+    <button class="button" onclick="markAttendance()">Mark Attendance</button>
+    
+    <h2>Attendance Statistics</h2>
+    <button class="button" onclick="viewStatistics()">View Statistics</button>
+    <table id="attendanceTable">
+        <tr>
+            <th>Student Name</th>
+            <th>Status</th>
+        </tr>
+    </table>
+    
+    <script>
+        let students = [];
+        let attendance = {};
 
+        function addStudent() {
+            const name = document.getElementById('studentName').value;
+            if (name && !students.includes(name)) {
+                students.push(name);
+                attendance[name] = 'Absent';
+                document.getElementById('studentName').value = '';
+                alert(name + ' has been added.');
+            } else {
+                alert('Student already exists or name is empty.');
+            }
+        }
 
+        function markAttendance() {
+            const name = document.getElementById('markName').value;
+            if (students.includes(name)) {
+                attendance[name] = 'Present';
+                document.getElementById('markName').value = '';
+                alert(name + ' attendance marked.');
+            } else {
+                alert('Student not found.');
+            }
+        }
+
+        function viewStatistics() {
+            const table = document.getElementById('attendanceTable');
+            table.innerHTML = '<tr><th>Student Name</th><th>Status</th></tr>';
+            for (let student of students) {
+                table.innerHTML += `<tr><td>${student}</td><td>${attendance[student]}</td></tr>`;
+            }
+        }
+    </script>
+</body>
 </html>
